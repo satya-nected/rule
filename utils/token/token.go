@@ -1,4 +1,4 @@
-package utils
+package token
 
 type Token int
 
@@ -38,7 +38,7 @@ const (
 	conditionOperatorEnd
 )
 
-var tokens = [...]string{
+var tokenList = [...]string{
 	ILLEGAL: "ILLEGAL",
 
 	GROUP: "group",
@@ -79,8 +79,8 @@ var tokens = [...]string{
 
 // String returns the string representation of the token.
 func (tok Token) String() string {
-	if tok >= 0 && tok < Token(len(tokens)) {
-		return tokens[tok]
+	if tok >= 0 && tok < Token(len(tokenList)) {
+		return tokenList[tok]
 	}
 	return ""
 }
