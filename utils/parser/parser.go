@@ -34,16 +34,15 @@ func (c *Conditions) IsValidNode(nodeId string) bool {
 	return ok
 }
 
-func Parse(data string) error {
+func Parse(data string) (ast.Expr, error) {
 	var conditions Conditions
 	err := json.Unmarshal([]byte(data), &conditions)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	visited := make(map[string]bool)
-	fmt.Println(parse(conditions.StartNode, &conditions, visited))
-	return nil
+	return parse(conditions.StartNode, &conditions, visited)
 }
 
 func parse(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
