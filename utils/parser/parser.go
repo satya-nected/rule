@@ -142,9 +142,9 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 
 	switch operatorToken {
 	case token.EQ:
-		fmt.Println(token.EQ)
 		parse(nodeDetail.LeftNode[0], conditions, visited)
 		parse(nodeDetail.RightNode[0], conditions, visited)
+
 	}
 
 	return true, nil

@@ -1,6 +1,11 @@
 package token
 
 type Token int
+type TokenDetail struct {
+	name              string
+	leftOperandCount  int
+	rightOperandCount int
+}
 
 const (
 	ILLEGAL_TOKEN Token = iota
@@ -44,48 +49,48 @@ const (
 	conditionOperatorEnd
 )
 
-var tokenList = [...]string{
-	ILLEGAL_TOKEN: "ILLEGAL",
+var tokenList = [...]TokenDetail{
+	ILLEGAL_TOKEN: {"ILLEGAL", 0, 0},
 
-	GROUP:        "group",
-	PARAMS:       "params",
-	CONDITION:    "condition",
-	SQLCONDITION: "sqlCondition",
-	CONSTANT:     "constant",
+	GROUP:        {"group", -1, -1},
+	PARAMS:       {"params", -1, -1},
+	CONDITION:    {"condition", -1, -1},
+	SQLCONDITION: {"sqlCondition", -1, -1},
+	CONSTANT:     {"constant", -1, -1},
 
-	AND: "and",
-	OR:  "or",
+	AND: {"and", -1, -1},
+	OR:  {"or", -1, -1},
 
-	EXISTS:  "ex",
-	NEXISTS: "nex",
+	EXISTS:  {"ex", 1, 0},
+	NEXISTS: {"nex", 1, 0},
 
-	ISNULL: "isNull",
-	NNULL:  "notNull",
+	ISNULL: {"isNull", 1, 0},
+	NNULL:  {"notNull", 1, 0},
 
-	BETWEEN:  "bet",
-	NBETWEEN: "nbet",
+	BETWEEN:  {"bet", 1, 2},
+	NBETWEEN: {"nbet", 1, 2},
 
-	CONTAINS:  "contains",
-	NCONTAINS: "notContains",
+	CONTAINS:  {"contains", 1, 1},
+	NCONTAINS: {"notContains", 1, 1},
 
-	STARTWITH:  "sw",
-	NSTARTWITH: "nsw",
+	STARTWITH:  {"sw", 1, 1},
+	NSTARTWITH: {"nsw", 1, 1},
 
-	ENDWITH:  "ew",
-	NENDWITH: "new",
+	ENDWITH:  {"ew", 1, 1},
+	NENDWITH: {"new", 1, 1},
 
-	EVEN: "even",
-	ODD:  "odd",
+	EVEN: {"even", 1, 0},
+	ODD:  {"odd", 1, 0},
 
-	EQ:  "eq",
-	NEQ: "neq",
-	GT:  "gt",
-	LT:  "lt",
-	GTE: "gte",
-	LTE: "lte",
+	EQ:  {"eq", 1, 1},
+	NEQ: {"neq", 1, 1},
+	GT:  {"gt", 1, 1},
+	LT:  {"lt", 1, 1},
+	GTE: {"gte", 1, 1},
+	LTE: {"lte", 1, 1},
 
-	TRUE:  "t",
-	FALSE: "f",
+	TRUE:  {"t", 1, 0},
+	FALSE: {"f", 1, 0},
 }
 
 func NewToken(input string) Token {
@@ -155,22 +160,38 @@ func NewToken(input string) Token {
 // String returns the string representation of the token.
 func (tok Token) String() string {
 	if tok >= 0 && tok < Token(len(tokenList)) {
-		return tokenList[tok]
+		return tokenList[tok].name
 	}
 	return ""
 }
 
+// GetLeftOperandCount returns count of leftOperands for tokens.
+func (t Token) GetLeftOperandCount() int {
+	if t >= 0 && t < Token(len(tokenList)) {
+		return tokenList[t].leftOperandCount
+	}
+	return -1
+}
+
+// GetRightOperandCount returns count of rightOperands for tokens.
+func (t Token) GetRightOperandCount() int {
+	if t >= 0 && t < Token(len(tokenList)) {
+		return tokenList[t].rightOperandCount
+	}
+	return -1
+}
+
 // IsNodeType returns true for node tokens.
-func (tok Token) IsNodeType() bool {
-	return tok > nodeTypeBegin && tok < nodeTypeEnd
+func (t Token) IsNodeType() bool {
+	return t > nodeTypeBegin && t < nodeTypeEnd
 }
 
 // IsGroupOperator returns true for group operator tokens.
-func (tok Token) IsGroupOperator() bool {
-	return tok > groupOperatorBegin && tok < groupOperatorEnd
+func (t Token) IsGroupOperator() bool {
+	return t > groupOperatorBegin && t < groupOperatorEnd
 }
 
 // IsConditionOperator returns true for condition operator tokens.
-func (tok Token) IsConditionOperator() bool {
-	return tok > conditionOperatorBegin && tok < conditionOperatorEnd
+func (t Token) IsConditionOperator() bool {
+	return t > conditionOperatorBegin && t < conditionOperatorEnd
 }
