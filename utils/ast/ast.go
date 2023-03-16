@@ -20,6 +20,7 @@ type Expr interface {
 
 // GroupRef represents a reference to a variable.
 type GroupRef struct {
+	Id       string
 	Children []Expr
 }
 
@@ -33,6 +34,7 @@ func (r *GroupRef) String() string { return "group" }
 
 // VarRef represents a reference to a variable.
 type VarRef struct {
+	Id  string
 	Val string
 }
 
@@ -46,6 +48,7 @@ func (r *VarRef) String() string { return QuoteIdent(r.Val) }
 
 // NumberLiteral represents a numeric literal.
 type NumberLiteral struct {
+	Id  string
 	Val float64
 }
 
@@ -59,6 +62,7 @@ func (l *NumberLiteral) String() string { return strconv.FormatFloat(l.Val, 'f',
 
 // BooleanLiteral represents a boolean literal.
 type BooleanLiteral struct {
+	Id  string
 	Val bool
 }
 
@@ -77,6 +81,7 @@ func (l *BooleanLiteral) String() string {
 
 // StringLiteral represents a string literal.
 type StringLiteral struct {
+	Id  string
 	Val string
 }
 
@@ -90,6 +95,7 @@ func (l *StringLiteral) String() string { return Quote(l.Val) }
 
 // TimeLiteral represents a point-in-time literal.
 type TimeLiteral struct {
+	Id  string
 	Val time.Time
 }
 
@@ -103,6 +109,7 @@ func (l *TimeLiteral) String() string { return l.Val.UTC().Format("2006-01-02 15
 
 // BinaryExpr represents an operation between two expressions.
 type BinaryExpr struct {
+	Id  string
 	Op  token.Token
 	LHS Expr
 	RHS Expr

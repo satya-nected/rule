@@ -3,6 +3,7 @@ package parser
 import (
 	"encoding/json"
 	"fmt"
+	"test/utils/ast"
 	"test/utils/token"
 )
 
@@ -41,21 +42,22 @@ func Parse(data string) error {
 	return nil
 }
 
-func parse(nodeId string, conditions *Conditions, visited map[string]bool) (bool, error) {
+func parse(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
 	fmt.Println("parsing start for ", nodeId)
 
 	// check if node is visited
 	if _, ok := visited[nodeId]; ok {
-		return false, fmt.Errorf("node_already_visted_%v", nodeId)
+		return nil, fmt.Errorf("node_already_visted_%v", nodeId)
 	}
 	var (
-		ans, ok    bool
+		ans        ast.Expr
+		ok         bool
 		err        error
 		nodeDetail NodeDetail
 	)
 
 	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return false, fmt.Errorf("invalid_nodeId_%v", nodeId)
+		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
 	}
 
 	_token := token.NewToken(nodeDetail.NodeType)
@@ -70,13 +72,13 @@ func parse(nodeId string, conditions *Conditions, visited map[string]bool) (bool
 		case token.CONSTANT:
 			ans, err = parseConstantNode(nodeId, conditions, visited)
 		default:
-			ans, err = false, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
+			ans, err = nil, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
 		}
 	}
 	return ans, err
 }
 
-func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bool) (bool, error) {
+func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
 	fmt.Println("started parseGroupNode ...", nodeId)
 
 	// make visited nodeId
@@ -89,31 +91,31 @@ func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bo
 
 	// check valid nodeDetail
 	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return false, fmt.Errorf("invalid_nodeId_%v", nodeId)
+		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
 	}
 
 	// check valid group node
 	if _token := token.NewToken(nodeDetail.NodeType); _token != token.GROUP {
-		return false, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
+		return nil, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
 	}
 
 	// load and check operator
 	operatorToken := token.NewToken(nodeDetail.Operator)
 	if !(nodeDetail.Operator == "" || operatorToken.IsGroupOperator()) {
-		return false, fmt.Errorf("invalid_operator_%v", nodeDetail.Operator)
+		return nil, fmt.Errorf("invalid_operator_%v", nodeDetail.Operator)
 	}
 
 	// loop over children
 	for _, childNode := range nodeDetail.Children {
 		_, err := parse(childNode, conditions, visited)
 		if err != nil {
-			return false, err
+			return nil, err
 		}
 	}
-	return false, nil
+	return nil, nil
 }
 
-func parseConditionNode(nodeId string, conditions *Conditions, visited map[string]bool) (bool, error) {
+func parseConditionNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
 	fmt.Println("started parseConditionNode ...", nodeId)
 
 	// make visited nodeId
@@ -126,18 +128,18 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 
 	// check valid nodeDetail
 	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return false, fmt.Errorf("invalid_nodeId_%v", nodeId)
+		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
 	}
 
 	// check valid condition node
 	if _token := token.NewToken(nodeDetail.NodeType); _token != token.CONDITION {
-		return false, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
+		return nil, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
 	}
 
 	// load and check operator
 	operatorToken := token.NewToken(nodeDetail.Operator)
 	if !operatorToken.IsConditionOperator() {
-		return false, fmt.Errorf("invalid_operator_%v", nodeDetail.Operator)
+		return nil, fmt.Errorf("invalid_operator_%v", nodeDetail.Operator)
 	}
 
 	switch operatorToken {
@@ -147,23 +149,23 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 
 	}
 
-	return true, nil
+	return nil, nil
 }
 
-func parseParamsNode(nodeId string, _ *Conditions, visited map[string]bool) (bool, error) {
+func parseParamsNode(nodeId string, _ *Conditions, visited map[string]bool) (ast.Expr, error) {
 	fmt.Println("started parseParamsNode ...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true
 
-	return false, nil
+	return nil, nil
 }
 
-func parseConstantNode(nodeId string, _ *Conditions, visited map[string]bool) (bool, error) {
+func parseConstantNode(nodeId string, _ *Conditions, visited map[string]bool) (ast.Expr, error) {
 	fmt.Println("started parseConstantNode ...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true
 
-	return false, nil
+	return nil, nil
 }
