@@ -8,36 +8,9 @@ import (
 	"time"
 )
 
-type Conditions struct {
-	StartNode string                `json:"startNode" bson:"startNode,omitempty"`
-	Nodes     map[string]NodeDetail `json:"nodes" bson:"nodes,omitempty"`
-}
-
-type NodeDetail struct {
-	NodeType     string      `json:"nodeType" bson:"nodeType,omitempty"`
-	Parent       string      `json:"parent" bson:"parent,omitempty"`
-	SiblingIndex int         `json:"siblingIndex" bson:"siblingIndex,omitempty"`
-	Name         string      `json:"name" bson:"name,omitempty"`
-	Operator     string      `json:"operator" bson:"operator,omitempty"`
-	Datatype     string      `json:"datatype" bson:"datatype,omitempty"`
-	Children     []string    `json:"children" bson:"children,omitempty"`
-	LeftNode     []string    `json:"leftNode" bson:"leftNode,omitempty"`
-	RightNode    []string    `json:"rightNode" bson:"rightNode,omitempty"`
-	SourceType   string      `json:"sourceType" bson:"sourceType,omitempty"`
-	Attribute    string      `json:"attribute" bson:"attribute,omitempty"`
-	Query        string      `json:"query" bson:"query,omitempty"`
-	Value        interface{} `json:"value" bson:"value,omitempty"`
-}
-
-func (c *Conditions) IsValidNode(nodeId string) bool {
-	_, ok := c.Nodes[nodeId]
-	return ok
-}
-
 func Parse(data string) (ast.Expr, error) {
 	var conditions Conditions
-	err := json.Unmarshal([]byte(data), &conditions)
-	if err != nil {
+	if err := json.Unmarshal([]byte(data), &conditions); err != nil {
 		return nil, err
 	}
 
@@ -88,19 +61,14 @@ func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bo
 	visited[nodeId] = true
 
 	var (
-		nodeDetail NodeDetail
-		ok         bool
+		nodeDetail *NodeDetail
 		groupExp   ast.GroupExpr
+		err        error
 	)
 
 	// check valid nodeDetail
-	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
-	}
-
-	// check valid group node
-	if _token := token.NewToken(nodeDetail.NodeType); _token != token.GROUP {
-		return nil, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
+	if nodeDetail, err = conditions.ValidNode(nodeId, token.GROUP); err != nil {
+		return nil, err
 	}
 
 	// if operator is empty consider it and
@@ -134,20 +102,14 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 	visited[nodeId] = true
 
 	var (
-		nodeDetail        NodeDetail
-		ok                bool
+		nodeDetail        *NodeDetail
 		err               error
 		lexp, rexp, r2exp ast.Expr
 	)
 
 	// check valid nodeDetail
-	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
-	}
-
-	// check valid condition node
-	if _token := token.NewToken(nodeDetail.NodeType); _token != token.CONDITION {
-		return nil, fmt.Errorf("invalid_nodeType_%v_%v", nodeDetail.NodeType, nodeId)
+	if nodeDetail, err = conditions.ValidNode(nodeId, token.CONDITION); err != nil {
+		return nil, err
 	}
 
 	// load and check operator
@@ -205,18 +167,13 @@ func parseConstantNode(nodeId string, conditions *Conditions, visited map[string
 	visited[nodeId] = true
 
 	var (
-		nodeDetail NodeDetail
-		ok         bool
+		nodeDetail *NodeDetail
+		err        error
 	)
 
 	// check valid nodeDetail
-	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
-	}
-
-	// check valid constant node
-	if _token := token.NewToken(nodeDetail.NodeType); _token != token.CONSTANT {
-		return nil, fmt.Errorf("invalid_nodeType_%v_%v", nodeDetail.NodeType, nodeId)
+	if nodeDetail, err = conditions.ValidNode(nodeId, token.CONSTANT); err != nil {
+		return nil, err
 	}
 
 	datatypeToken := token.NewToken(nodeDetail.Datatype)
@@ -251,18 +208,13 @@ func parseParamsNode(nodeId string, conditions *Conditions, visited map[string]b
 	visited[nodeId] = true
 
 	var (
-		nodeDetail NodeDetail
-		ok         bool
+		nodeDetail *NodeDetail
+		err        error
 	)
 
 	// check valid nodeDetail
-	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
-		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
-	}
-
-	// check valid constant node
-	if _token := token.NewToken(nodeDetail.NodeType); _token != token.PARAMS {
-		return nil, fmt.Errorf("invalid_nodeType_%v_%v", nodeDetail.NodeType, nodeId)
+	if nodeDetail, err = conditions.ValidNode(nodeId, token.PARAMS); err != nil {
+		return nil, err
 	}
 
 	if nodeDetail.SourceType == "" || nodeDetail.Attribute == "" {
