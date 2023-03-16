@@ -2,8 +2,8 @@ package ast
 
 import (
 	"fmt"
+	"go/token"
 	"strconv"
-	"test/utils/token"
 	"time"
 )
 
@@ -18,19 +18,90 @@ type Expr interface {
 	Args() []string
 }
 
-// GroupRef represents a reference to a variable.
-type GroupRef struct {
+// GroupExpr represents a groupExpr
+type GroupExpr struct {
 	Id       string
 	Children []Expr
 }
 
-func (*GroupRef) expr() {}
-func (*GroupRef) node() {}
-func (*GroupRef) Args() []string {
+func (*GroupExpr) expr() {}
+func (*GroupExpr) node() {}
+func (*GroupExpr) Args() []string {
 	args := []string{}
 	return args
 }
-func (r *GroupRef) String() string { return "group" }
+func (r *GroupExpr) String() string {
+	str := ""
+	for _, child := range r.Children {
+		if child != nil {
+			str += child.String()
+		}
+	}
+	return str
+}
+
+// BinaryExpr represents an operation between two expressions.
+type BinaryExpr struct {
+	Id  string
+	Op  token.Token
+	LHS Expr
+	RHS Expr
+}
+
+func (*BinaryExpr) expr() {}
+func (*BinaryExpr) node() {}
+func (*BinaryExpr) Args() []string {
+	args := []string{}
+	return args
+}
+func (e *BinaryExpr) String() string {
+	if e.LHS != nil && e.RHS != nil {
+		return fmt.Sprintf("%s %s %s", e.LHS.String(), e.Op, e.RHS.String())
+	}
+	return ""
+}
+
+// UniaryExpr represents an operation one expressions.
+type UniaryExpr struct {
+	Id  string
+	Op  token.Token
+	LHS Expr
+}
+
+func (*UniaryExpr) expr() {}
+func (*UniaryExpr) node() {}
+func (*UniaryExpr) Args() []string {
+	args := []string{}
+	return args
+}
+func (e *UniaryExpr) String() string {
+	if e.LHS != nil {
+		return fmt.Sprintf("%s %s", e.Op, e.LHS.String())
+	}
+	return ""
+}
+
+// TerniaryExpr represents an operation between three expressions.
+type TerniaryExpr struct {
+	Id   string
+	Op   token.Token
+	LHS  Expr
+	RHS  Expr
+	RHS2 Expr
+}
+
+func (*TerniaryExpr) expr() {}
+func (*TerniaryExpr) node() {}
+func (*TerniaryExpr) Args() []string {
+	args := []string{}
+	return args
+}
+func (e *TerniaryExpr) String() string {
+	if e.LHS != nil && e.RHS != nil && e.RHS2 != nil {
+		return fmt.Sprintf("%s %s %s %s", e.LHS.String(), e.Op, e.RHS.String(), e.RHS2.String())
+	}
+	return ""
+}
 
 // VarRef represents a reference to a variable.
 type VarRef struct {
@@ -106,21 +177,3 @@ func (*TimeLiteral) Args() []string {
 	return args
 }
 func (l *TimeLiteral) String() string { return l.Val.UTC().Format("2006-01-02 15:04:05.999") }
-
-// BinaryExpr represents an operation between two expressions.
-type BinaryExpr struct {
-	Id  string
-	Op  token.Token
-	LHS Expr
-	RHS Expr
-}
-
-func (*BinaryExpr) expr() {}
-func (*BinaryExpr) node() {}
-func (*BinaryExpr) Args() []string {
-	args := []string{}
-	return args
-}
-func (e *BinaryExpr) String() string {
-	return fmt.Sprintf("%s %s %s", e.LHS.String(), e.Op, e.RHS.String())
-}

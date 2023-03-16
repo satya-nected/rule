@@ -10,7 +10,7 @@ type DataType string
 
 const (
 	Unknown = DataType("")
-	Number  = DataType("number")
+	Number  = DataType("numeric")
 	Boolean = DataType("boolean")
 	String  = DataType("string")
 	Time    = DataType("time")

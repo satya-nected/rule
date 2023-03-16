@@ -41,7 +41,8 @@ var data = `
 		"rule_1": {
 			"siblingIndex": 1,
 			"nodeType": "constant",
-			"value": "50",
+			"value": 50,
+			"datatype": "integer"
 			"parent": "rule_1"
 		}
 	}

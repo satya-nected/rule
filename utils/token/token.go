@@ -7,7 +7,9 @@ const (
 
 	// Literals
 	literalBegin
-	IDENT
+	NUMBER
+	STRING
+	DATETIME
 	literalEnd
 
 	// nodeType operator
@@ -66,6 +68,10 @@ const (
 var tokenList = [...]string{
 	ILLEGAL_TOKEN: "ILLEGAL",
 
+	NUMBER:   "number",
+	STRING:   "string",
+	DATETIME: "dateTime",
+
 	GROUP:        "group",
 	PARAMS:       "params",
 	CONDITION:    "condition",
@@ -103,6 +109,14 @@ var tokenList = [...]string{
 
 func NewToken(input string) Token {
 	switch input {
+
+	case NUMBER.String():
+		return NUMBER
+	case STRING.String():
+		return STRING
+	case DATETIME.String():
+		return DATETIME
+
 	case GROUP.String():
 		return GROUP
 	case PARAMS.String():
@@ -192,17 +206,22 @@ func (t Token) IsConditionOperator() bool {
 	return t > conditionOperatorBegin && t < conditionOperatorEnd
 }
 
-// IsBinaryOperator returns true for binary operator tokens.
-func (t Token) IsBinaryOperator() bool {
-	return t > binaryOperatorBegin && t < binaryOperatorEnd
-}
-
 // IsUniaryOperator returns true for uniary operator tokens.
 func (t Token) IsUniaryOperator() bool {
 	return t > uniaryOperatorBegin && t < uniaryOperatorEnd
 }
 
+// IsBinaryOperator returns true for binary operator tokens.
+func (t Token) IsBinaryOperator() bool {
+	return t > binaryOperatorBegin && t < binaryOperatorEnd
+}
+
 // IsTerniaryOperator returns true for terniary operator tokens.
 func (t Token) IsTerniaryOperator() bool {
 	return t > terniaryOperatorBegin && t < terniaryOperatorEnd
+}
+
+// IsLiteral returns true for terniary operator tokens.
+func (t Token) IsLiteral() bool {
+	return t > literalBegin && t < literalEnd
 }
