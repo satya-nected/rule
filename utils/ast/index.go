@@ -1,6 +1,8 @@
-package utils
+package ast
 
 import (
+	"regexp"
+	"strings"
 	"time"
 )
 
@@ -30,13 +32,14 @@ func InspectDataType(v interface{}) DataType {
 	}
 }
 
-type Node interface {
-	node()
-	String() string
+// Quote returns a quoted string.
+func Quote(s string) string {
+	return `"` + strings.NewReplacer("\n", `\n`, `\`, `\\`, `"`, `\"`).Replace(s) + `"`
 }
 
-type Expr interface {
-	Node
-	expr()
-	Args() []string
+func QuoteIdent(s string) string {
+	if s == "" || regexp.MustCompile(`[^a-zA-Z_.]`).MatchString(s) {
+		return Quote(s)
+	}
+	return s
 }

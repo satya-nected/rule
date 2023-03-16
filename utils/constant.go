@@ -1,5 +1,11 @@
 package utils
 
+type OperandDetail struct {
+	Name          string
+	LeftOperands  int
+	RightOperands int
+}
+
 var Operator = map[string]string{
 	"and": "",
 	"or":  "",

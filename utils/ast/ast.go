@@ -1,34 +1,11 @@
 package ast
 
 import (
+	"fmt"
+	"strconv"
+	"test/utils/token"
 	"time"
 )
-
-type DataType string
-
-const (
-	Unknown = DataType("")
-	Number  = DataType("number")
-	Boolean = DataType("boolean")
-	String  = DataType("string")
-	Time    = DataType("time")
-)
-
-// InspectDataType returns the data type of a given value.
-func InspectDataType(v interface{}) DataType {
-	switch v.(type) {
-	case float64:
-		return Number
-	case bool:
-		return Boolean
-	case string:
-		return String
-	case time.Time:
-		return Time
-	default:
-		return Unknown
-	}
-}
 
 type Node interface {
 	node()
@@ -39,4 +16,104 @@ type Expr interface {
 	Node
 	expr()
 	Args() []string
+}
+
+// GroupRef represents a reference to a variable.
+type GroupRef struct {
+	Children []Expr
+}
+
+func (*GroupRef) expr() {}
+func (*GroupRef) node() {}
+func (*GroupRef) Args() []string {
+	args := []string{}
+	return args
+}
+func (r *GroupRef) String() string { return "group" }
+
+// VarRef represents a reference to a variable.
+type VarRef struct {
+	Val string
+}
+
+func (*VarRef) expr() {}
+func (*VarRef) node() {}
+func (*VarRef) Args() []string {
+	args := []string{}
+	return args
+}
+func (r *VarRef) String() string { return QuoteIdent(r.Val) }
+
+// NumberLiteral represents a numeric literal.
+type NumberLiteral struct {
+	Val float64
+}
+
+func (*NumberLiteral) expr() {}
+func (*NumberLiteral) node() {}
+func (*NumberLiteral) Args() []string {
+	args := []string{}
+	return args
+}
+func (l *NumberLiteral) String() string { return strconv.FormatFloat(l.Val, 'f', 3, 64) }
+
+// BooleanLiteral represents a boolean literal.
+type BooleanLiteral struct {
+	Val bool
+}
+
+func (*BooleanLiteral) expr() {}
+func (*BooleanLiteral) node() {}
+func (*BooleanLiteral) Args() []string {
+	args := []string{}
+	return args
+}
+func (l *BooleanLiteral) String() string {
+	if l.Val {
+		return "true"
+	}
+	return "false"
+}
+
+// StringLiteral represents a string literal.
+type StringLiteral struct {
+	Val string
+}
+
+func (*StringLiteral) expr() {}
+func (*StringLiteral) node() {}
+func (*StringLiteral) Args() []string {
+	args := []string{}
+	return args
+}
+func (l *StringLiteral) String() string { return Quote(l.Val) }
+
+// TimeLiteral represents a point-in-time literal.
+type TimeLiteral struct {
+	Val time.Time
+}
+
+func (*TimeLiteral) expr() {}
+func (*TimeLiteral) node() {}
+func (*TimeLiteral) Args() []string {
+	args := []string{}
+	return args
+}
+func (l *TimeLiteral) String() string { return l.Val.UTC().Format("2006-01-02 15:04:05.999") }
+
+// BinaryExpr represents an operation between two expressions.
+type BinaryExpr struct {
+	Op  token.Token
+	LHS Expr
+	RHS Expr
+}
+
+func (*BinaryExpr) expr() {}
+func (*BinaryExpr) node() {}
+func (*BinaryExpr) Args() []string {
+	args := []string{}
+	return args
+}
+func (e *BinaryExpr) String() string {
+	return fmt.Sprintf("%s %s %s", e.LHS.String(), e.Op, e.RHS.String())
 }
