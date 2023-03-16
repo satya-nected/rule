@@ -282,3 +282,176 @@ var Data3 = `
 	}
 }
 `
+
+var Data4 = `
+{
+	"startNode": "rule_01",
+	"nodes": {
+		"rule_01": {
+			"operator": "and",
+			"parent": "",
+			"nodeType": "group",
+			"children": [
+				"rule_02",
+				"rule_2",
+				"rule_6",
+				"rule_19"
+			],
+			"siblingIndex": 1
+		},
+		"rule_02": {
+			"operator": "gte",
+			"parent": "rule_01",
+			"nodeType": "condition",
+			"siblingIndex": 1,
+			"leftNode": [
+				"rule_03"
+			],
+			"rightNode": [
+				"rule_1"
+			],
+			"dataType": "numeric"
+		},
+		"rule_03": {
+			"nodeType": "params",
+			"sourceType": "constantInput",
+			"attribute": "CI0",
+			"parent": "rule_02",
+			"siblingIndex": 1
+		},
+		"rule_1": {
+			"siblingIndex": 1,
+			"nodeType": "constant",
+			"value": 60,
+			"datatype":"number",
+			"parent": "rule_1"
+		},
+		"rule_2": {
+			"parent": "rule_01",
+			"nodeType": "condition",
+			"operator": "lt",
+			"dataType": "numeric",
+			"siblingIndex": 2,
+			"leftNode": [
+				"rule_3"
+			],
+			"rightNode": [
+				"rule_5"
+			]
+		},
+		"rule_3": {
+			"nodeType": "params",
+			"sourceType": "constantInput",
+			"attribute": "CI0",
+			"parent": "rule_2",
+			"siblingIndex": 2
+		},
+		"rule_5": {
+			"siblingIndex": 1,
+			"nodeType": "constant",
+			"value": 90,
+			"datatype":"number",
+			"parent": "rule_5"
+		},
+		"rule_6": {
+			"parent": "rule_01",
+			"nodeType": "group",
+			"operator": "or",
+			"children": [
+				"rule_9",
+				"rule_12"
+			],
+			"siblingIndex": 3
+		},
+		"rule_9": {
+			"parent": "rule_6",
+			"nodeType": "condition",
+			"operator": "eq",
+			"siblingIndex": 1,
+			"leftNode": [
+				"rule_7"
+			],
+			"rightNode": [
+				"rule_11"
+			],
+			"dataType": "string"
+		},
+		"rule_7": {
+			"nodeType": "params",
+			"sourceType": "constantInput",
+			"attribute": "CI10",
+			"parent": "rule_9",
+			"siblingIndex": 1
+		},
+		"rule_11": {
+			"siblingIndex": 1,
+			"nodeType": "constant",
+			"value": "satya",
+			"datatype":"string",
+			"parent": "rule_11"
+		},
+		"rule_12": {
+			"parent": "rule_6",
+			"nodeType": "condition",
+			"operator": "eq",
+			"dataType": "string",
+			"siblingIndex": 2,
+			"leftNode": [
+				"rule_13"
+			],
+			"rightNode": [
+				"rule_15"
+			]
+		},
+		"rule_13": {
+			"nodeType": "params",
+			"sourceType": "constantInput",
+			"attribute": "CI10",
+			"parent": "rule_12",
+			"siblingIndex": 2
+		},
+		"rule_15": {
+			"siblingIndex": 1,
+			"nodeType": "constant",
+			"value": "aman",
+			"datatype":"string",
+			"parent": "rule_15"
+		},
+		"rule_19": {
+			"parent": "rule_01",
+			"nodeType": "condition",
+			"operator": "bet",
+			"dataType": "numeric",
+			"siblingIndex": 4,
+			"leftNode": [
+				"rule_20"
+			],
+			"rightNode": [
+				"rule_23",
+				"rule_24"
+			]
+		},
+		"rule_20": {
+			"nodeType": "params",
+			"sourceType": "constantInput",
+			"attribute": "CI0",
+			"parent": "rule_19",
+			"siblingIndex": 4
+		},
+		"rule_23": {
+			"siblingIndex": 1,
+			"nodeType": "constant",
+			"value": 4,
+			"datatype":"number",
+			"parent": "rule_23"
+		},
+		"rule_24": {
+			"siblingIndex": 1,
+			"nodeType": "constant",
+			"value": 10,
+			"datatype":"number",
+			"parent": "rule_24"
+		}
+	}
+}
+`
