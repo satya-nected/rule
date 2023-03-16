@@ -107,6 +107,10 @@ var tokenList = [...]string{
 	NBETWEEN: "nbet",
 }
 
+func Tes() Token {
+	return AND
+}
+
 func NewToken(input string) Token {
 	switch input {
 

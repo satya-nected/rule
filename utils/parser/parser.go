@@ -104,14 +104,20 @@ func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bo
 		return nil, fmt.Errorf("invalid_nodeType_%v", nodeDetail.NodeType)
 	}
 
+	// if operator is empty consider it and
+	if nodeDetail.Operator == "" {
+		nodeDetail.Operator = "and"
+	}
+
 	// load and check operator
 	operatorToken := token.NewToken(nodeDetail.Operator)
-	if !(nodeDetail.Operator == "" || operatorToken.IsGroupOperator()) {
+	if !operatorToken.IsGroupOperator() {
 		return nil, fmt.Errorf("invalid_operator_%v", nodeDetail.Operator)
 	}
 
 	// loop over children
 	groupExp.Id = nodeId
+	groupExp.Op = operatorToken
 	for _, childNode := range nodeDetail.Children {
 		expr, err := parse(childNode, conditions, visited)
 		if err != nil {
@@ -159,7 +165,7 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 		if lexp, err = parse(nodeDetail.LeftNode[0], conditions, visited); err != nil {
 			return nil, err
 		}
-		return &ast.UniaryExpr{Id: nodeId, LHS: lexp}, nil
+		return &ast.UniaryExpr{Id: nodeId, LHS: lexp, Op: operatorToken}, nil
 	} else if operatorToken.IsBinaryOperator() {
 		if len(nodeDetail.LeftNode) != 1 && len(nodeDetail.RightNode) != 1 {
 			return nil, fmt.Errorf("invalid_leftNode_or_rightNode_%v", nodeId)
@@ -172,7 +178,7 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 		if rexp, err = parse(nodeDetail.RightNode[0], conditions, visited); err != nil {
 			return nil, err
 		}
-		return &ast.BinaryExpr{Id: nodeId, LHS: lexp, RHS: rexp}, nil
+		return &ast.BinaryExpr{Id: nodeId, LHS: lexp, RHS: rexp, Op: operatorToken}, nil
 	} else if operatorToken.IsTerniaryOperator() {
 		if len(nodeDetail.LeftNode) != 1 && len(nodeDetail.RightNode) != 2 {
 			return nil, fmt.Errorf("invalid_leftNode_or_rightNode_%v", nodeId)
@@ -188,7 +194,7 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 		if r2exp, err = parse(nodeDetail.RightNode[1], conditions, visited); err != nil {
 			return nil, err
 		}
-		return &ast.TerniaryExpr{Id: nodeId, LHS: lexp, RHS: rexp, RHS2: r2exp}, nil
+		return &ast.TerniaryExpr{Id: nodeId, LHS: lexp, RHS: rexp, RHS2: r2exp, Op: operatorToken}, nil
 	}
 	return nil, fmt.Errorf("invalid_operator_%v_%v", nodeDetail.Operator, nodeId)
 }

@@ -5,6 +5,29 @@ import (
 	"test/utils/parser"
 )
 
+var data1 = `
+{
+	"startNode": "rule_01",
+	"nodes": {
+		"rule_01": {
+			"attribute": "",
+			"children": [],
+			"datatype": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "group",
+			"operator": "",
+			"parent": "",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": null
+		},
+	}
+}
+`
+
 var data = `
 {
 	"startNode": "rule_01",

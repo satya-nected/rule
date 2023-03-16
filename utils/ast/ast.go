@@ -2,8 +2,8 @@ package ast
 
 import (
 	"fmt"
-	"go/token"
 	"strconv"
+	"test/utils/token"
 	"time"
 )
 
@@ -21,6 +21,7 @@ type Expr interface {
 // GroupExpr represents a groupExpr
 type GroupExpr struct {
 	Id       string
+	Op       token.Token
 	Children []Expr
 }
 
@@ -31,12 +32,14 @@ func (*GroupExpr) Args() []string {
 	return args
 }
 func (r *GroupExpr) String() string {
-	str := ""
+	str := "{ " + r.Op.String() + " : ["
 	for _, child := range r.Children {
 		if child != nil {
 			str += child.String()
+			str += ", "
 		}
 	}
+	str += "] }"
 	return str
 }
 
