@@ -3,9 +3,15 @@ package token
 type Token int
 
 const (
-	ILLEGAL Token = iota
+	ILLEGAL_TOKEN Token = iota
 
+	nodeTypeBegin
 	GROUP
+	PARAMS
+	CONDITION
+	SQLCONDITION
+	CONSTANT
+	nodeTypeEnd
 
 	groupOperatorBegin
 	AND
@@ -39,11 +45,16 @@ const (
 )
 
 var tokenList = [...]string{
-	ILLEGAL: "ILLEGAL",
+	ILLEGAL_TOKEN: "ILLEGAL",
 
-	GROUP: "group",
-	AND:   "and",
-	OR:    "or",
+	GROUP:        "group",
+	PARAMS:       "params",
+	CONDITION:    "condition",
+	SQLCONDITION: "sqlCondition",
+	CONSTANT:     "constant",
+
+	AND: "and",
+	OR:  "or",
 
 	EXISTS:  "ex",
 	NEXISTS: "nex",
@@ -77,12 +88,81 @@ var tokenList = [...]string{
 	FALSE: "f",
 }
 
+func NewToken(input string) Token {
+	switch input {
+	case GROUP.String():
+		return GROUP
+	case PARAMS.String():
+		return PARAMS
+	case CONDITION.String():
+		return CONDITION
+	case SQLCONDITION.String():
+		return SQLCONDITION
+	case CONSTANT.String():
+		return CONSTANT
+	case AND.String():
+		return AND
+	case OR.String():
+		return OR
+	case EXISTS.String():
+		return EXISTS
+	case NEXISTS.String():
+		return NEXISTS
+	case ISNULL.String():
+		return ISNULL
+	case NNULL.String():
+		return NNULL
+	case BETWEEN.String():
+		return BETWEEN
+	case NBETWEEN.String():
+		return NBETWEEN
+	case CONTAINS.String():
+		return CONTAINS
+	case NCONTAINS.String():
+		return NCONTAINS
+	case STARTWITH.String():
+		return STARTWITH
+	case NSTARTWITH.String():
+		return NSTARTWITH
+	case ENDWITH.String():
+		return ENDWITH
+	case NENDWITH.String():
+		return NENDWITH
+	case EVEN.String():
+		return EVEN
+	case ODD.String():
+		return ODD
+	case EQ.String():
+		return EQ
+	case NEQ.String():
+		return NEQ
+	case GT.String():
+		return GT
+	case LT.String():
+		return LT
+	case GTE.String():
+		return GTE
+	case LTE.String():
+		return LTE
+	case TRUE.String():
+		return TRUE
+	case FALSE.String():
+		return FALSE
+	}
+	return ILLEGAL_TOKEN
+}
+
 // String returns the string representation of the token.
 func (tok Token) String() string {
 	if tok >= 0 && tok < Token(len(tokenList)) {
 		return tokenList[tok]
 	}
 	return ""
+}
+
+// IsNodeType returns true for node tokens.
+func (tok Token) IsNodeType() bool {
+	return tok > nodeTypeBegin && tok < nodeTypeEnd
 }
 
 // IsGroupOperator returns true for group operator tokens.
