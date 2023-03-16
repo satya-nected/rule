@@ -10,40 +10,70 @@ var data = `
 	"startNode": "rule_01",
 	"nodes": {
 		"rule_01": {
-			"operator": "",
-			"parent": "",
-			"nodeType": "group",
+			"attribute": "",
 			"children": [
 				"rule_02"
 			],
-			"siblingIndex": 1
+			"datatype": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "group",
+			"operator": "",
+			"parent": "",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": null
 		},
 		"rule_02": {
-			"operator": "eq",
-			"parent": "rule_01",
-			"nodeType": "condition",
-			"siblingIndex": 1,
+			"attribute": "",
+			"children": null,
+			"datatype": "",
 			"leftNode": [
 				"rule_03"
 			],
+			"name": "",
+			"nodeType": "condition",
+			"operator": "eq",
+			"parent": "rule_01",
+			"query": "",
 			"rightNode": [
-				"rule_1"
+				"rule_2"
 			],
-			"dataType": "numeric"
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": null
 		},
 		"rule_03": {
-			"nodeType": "params",
-			"sourceType": "constantInput",
 			"attribute": "CI0",
+			"children": null,
+			"datatype": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "params",
+			"operator": "",
 			"parent": "rule_02",
-			"siblingIndex": 1
-		},
-		"rule_1": {
+			"query": "",
+			"rightNode": null,
 			"siblingIndex": 1,
+			"sourceType": "customInput",
+			"value": null
+		},
+		"rule_2": {
+			"attribute": "",
+			"children": null,
+			"datatype": "number",
+			"leftNode": null,
+			"name": "",
 			"nodeType": "constant",
-			"value": 50,
-			"datatype": "integer"
-			"parent": "rule_1"
+			"operator": "",
+			"parent": "rule_2",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": 23
 		}
 	}
 }

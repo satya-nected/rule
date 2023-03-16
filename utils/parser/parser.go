@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"test/utils/ast"
 	"test/utils/token"
+	"time"
 )
 
 type Conditions struct {
@@ -35,7 +36,10 @@ func (c *Conditions) IsValidNode(nodeId string) bool {
 
 func Parse(data string) error {
 	var conditions Conditions
-	json.Unmarshal([]byte(data), &conditions)
+	err := json.Unmarshal([]byte(data), &conditions)
+	if err != nil {
+		return err
+	}
 
 	visited := make(map[string]bool)
 	fmt.Println(parse(conditions.StartNode, &conditions, visited))
@@ -215,20 +219,49 @@ func parseConstantNode(nodeId string, conditions *Conditions, visited map[string
 		return nil, fmt.Errorf("invalid_datatype_%v_%v", nodeDetail.Datatype, nodeId)
 	}
 
-	// switch datatypeToken {
-	// case token.NUMBER:
-	// 	v := nodeDetail.Value.(float64)
-	// 	return &ast.NumberLiteral{Id: nodeId, Val: v}, nil
-	// }
-
-	return nil, nil
+	switch datatypeToken {
+	case token.NUMBER:
+		if ast.InspectDataType(nodeDetail.Value) != ast.Number {
+			return nil, fmt.Errorf("invalid_value_%v_%v", nodeDetail.Value, nodeId)
+		}
+		return &ast.NumberLiteral{Id: nodeId, Val: nodeDetail.Value.(float64)}, nil
+	case token.STRING:
+		if ast.InspectDataType(nodeDetail.Value) != ast.String {
+			return nil, fmt.Errorf("invalid_value_%v_%v", nodeDetail.Value, nodeId)
+		}
+		return &ast.StringLiteral{Id: nodeId, Val: nodeDetail.Value.(string)}, nil
+	case token.DATETIME:
+		if ast.InspectDataType(nodeDetail.Value) != ast.Time {
+			return nil, fmt.Errorf("invalid_value_%v_%v", nodeDetail.Value, nodeId)
+		}
+		return &ast.TimeLiteral{Id: nodeId, Val: nodeDetail.Value.(time.Time)}, nil
+	}
+	return nil, fmt.Errorf("invalid_datatype_%v_%v", nodeDetail.Datatype, nodeId)
 }
 
-func parseParamsNode(nodeId string, _ *Conditions, visited map[string]bool) (ast.Expr, error) {
+func parseParamsNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
 	fmt.Println("started parseParamsNode ...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true
 
-	return nil, nil
+	var (
+		nodeDetail NodeDetail
+		ok         bool
+	)
+
+	// check valid nodeDetail
+	if nodeDetail, ok = conditions.Nodes[nodeId]; !ok {
+		return nil, fmt.Errorf("invalid_nodeId_%v", nodeId)
+	}
+
+	// check valid constant node
+	if _token := token.NewToken(nodeDetail.NodeType); _token != token.PARAMS {
+		return nil, fmt.Errorf("invalid_nodeType_%v_%v", nodeDetail.NodeType, nodeId)
+	}
+
+	if nodeDetail.SourceType == "" || nodeDetail.Attribute == "" {
+		return nil, fmt.Errorf("sourceType_and_attribute_required_%v", nodeId)
+	}
+	return &ast.VarRef{Id: nodeId, Var: nodeDetail.Attribute, Source: nodeDetail.SourceType}, nil
 }

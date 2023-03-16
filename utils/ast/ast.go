@@ -105,8 +105,9 @@ func (e *TerniaryExpr) String() string {
 
 // VarRef represents a reference to a variable.
 type VarRef struct {
-	Id  string
-	Val string
+	Id     string
+	Var    string
+	Source string
 }
 
 func (*VarRef) expr() {}
@@ -115,7 +116,9 @@ func (*VarRef) Args() []string {
 	args := []string{}
 	return args
 }
-func (r *VarRef) String() string { return QuoteIdent(r.Val) }
+func (r *VarRef) String() string {
+	return r.Var
+}
 
 // NumberLiteral represents a numeric literal.
 type NumberLiteral struct {
