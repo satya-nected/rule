@@ -103,7 +103,7 @@ var Data2 = `
 		},
 		"rule_03": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_02",
 			"siblingIndex": 1
@@ -130,7 +130,7 @@ var Data2 = `
 		},
 		"rule_3": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_2",
 			"siblingIndex": 2
@@ -176,7 +176,7 @@ var Data3 = `
 		},
 		"rule_03": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_02",
 			"siblingIndex": 1
@@ -203,7 +203,7 @@ var Data3 = `
 		},
 		"rule_3": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_2",
 			"siblingIndex": 2
@@ -240,7 +240,7 @@ var Data3 = `
 		},
 		"rule_7": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI10",
 			"parent": "rule_9",
 			"siblingIndex": 1
@@ -267,7 +267,7 @@ var Data3 = `
 		},
 		"rule_13": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI10",
 			"parent": "rule_12",
 			"siblingIndex": 2
@@ -314,7 +314,7 @@ var Data4 = `
 		},
 		"rule_03": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_02",
 			"siblingIndex": 1
@@ -341,7 +341,7 @@ var Data4 = `
 		},
 		"rule_3": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_2",
 			"siblingIndex": 2
@@ -378,7 +378,7 @@ var Data4 = `
 		},
 		"rule_7": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI10",
 			"parent": "rule_9",
 			"siblingIndex": 1
@@ -405,7 +405,7 @@ var Data4 = `
 		},
 		"rule_13": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI10",
 			"parent": "rule_12",
 			"siblingIndex": 2
@@ -433,7 +433,7 @@ var Data4 = `
 		},
 		"rule_20": {
 			"nodeType": "params",
-			"sourceType": "constantInput",
+			"sourceType": "customInput",
 			"attribute": "CI0",
 			"parent": "rule_19",
 			"siblingIndex": 4
