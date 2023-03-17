@@ -9,7 +9,7 @@ import (
 
 func ApplyUniaryOperator(op token.Token, leftValue ast.Expr) (ast.Expr, error) {
 
-	return nil, nil
+	return falseExpr, fmt.Errorf("invalid_operator_%v", op)
 }
 
 func ApplyBinaryOperator(op token.Token, leftValue, rightValue ast.Expr) (ast.Expr, error) {
@@ -42,8 +42,14 @@ func ApplyBinaryOperator(op token.Token, leftValue, rightValue ast.Expr) (ast.Ex
 	return falseExpr, fmt.Errorf("invalid_operator_%v", op)
 }
 
-func ApplyTerniaryOperator(op token.Token, leftValue, rightValue, rightVal2 ast.Expr) (ast.Expr, error) {
-	return nil, nil
+func ApplyTerniaryOperator(op token.Token, leftValue, rightValue, rightValue2 ast.Expr) (ast.Expr, error) {
+	switch op {
+	case token.BETWEEN:
+		return ApplyBETWEEN(leftValue, rightValue, rightValue2)
+	case token.NBETWEEN:
+		return ApplyNBETWEEN(leftValue, rightValue, rightValue2)
+	}
+	return falseExpr, fmt.Errorf("invalid_operator_%v", op)
 }
 
 func ApplyEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
@@ -270,6 +276,44 @@ func ApplyNENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 			return falseExpr, fmt.Errorf("error_cmp_num_nnum")
 		}
 		return &ast.BooleanLiteral{Val: !CheckEndWithString(an, bn)}, nil
+	}
+	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
+}
+
+func ApplyBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLiteral, error) {
+	var (
+		an, bn, cn float64
+		err, err2  error
+	)
+	an, err = getNumber(leftValue)
+	if err == nil {
+		bn, err2 = getNumber(rightValue)
+		if err2 == nil {
+			cn, err = getNumber(rightValue2)
+			if err != nil {
+				return &ast.BooleanLiteral{Val: (an >= bn && an <= cn)}, nil
+			}
+		}
+		return falseExpr, fmt.Errorf("error_cmp_num_nnum")
+	}
+	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
+}
+
+func ApplyNBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLiteral, error) {
+	var (
+		an, bn, cn float64
+		err, err2  error
+	)
+	an, err = getNumber(leftValue)
+	if err == nil {
+		bn, err2 = getNumber(rightValue)
+		if err2 == nil {
+			cn, err = getNumber(rightValue2)
+			if err != nil {
+				return &ast.BooleanLiteral{Val: !(an >= bn && an <= cn)}, nil
+			}
+		}
+		return falseExpr, fmt.Errorf("error_cmp_num_nnum")
 	}
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }

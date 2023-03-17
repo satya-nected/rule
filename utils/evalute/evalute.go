@@ -45,8 +45,6 @@ func evaluateSubtree(expr ast.Expr, args map[string]map[string]interface{}) (ast
 		return evaluateVarRef(expr, args)
 	case *ast.NumberLiteral, *ast.StringLiteral, *ast.BooleanLiteral, *ast.TimeLiteral:
 		return expr, nil
-	default:
-		break
 	}
 	return falseExpr, fmt.Errorf("unsupported_expr_%v", expr)
 }

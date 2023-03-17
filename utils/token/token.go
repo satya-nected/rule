@@ -12,7 +12,7 @@ const (
 	DATETIME
 	literalEnd
 
-	// nodeType operator
+	// nodeType token
 	nodeTypeBegin
 	GROUP
 	PARAMS
