@@ -86,7 +86,7 @@ func evaluateUniaryExpr(expr *ast.UniaryExpr, args map[string]map[string]interfa
 	if err != nil {
 		return falseExpr, err
 	}
-	return ApplyUniaryOperator(expr.Op, lv)
+	return applyUniaryOperator(expr.Op, lv)
 }
 
 func evaluateBinaryExpr(expr *ast.BinaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
@@ -99,7 +99,7 @@ func evaluateBinaryExpr(expr *ast.BinaryExpr, args map[string]map[string]interfa
 	if err != nil {
 		return falseExpr, err
 	}
-	return ApplyBinaryOperator(expr.Op, lv, rv)
+	return applyBinaryOperator(expr.Op, lv, rv)
 }
 
 func evaluateTerniaryExpr(expr *ast.TerniaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
@@ -116,7 +116,7 @@ func evaluateTerniaryExpr(expr *ast.TerniaryExpr, args map[string]map[string]int
 	if err != nil {
 		return falseExpr, err
 	}
-	return ApplyTerniaryOperator(expr.Op, lv, rv, rv2)
+	return applyTerniaryOperator(expr.Op, lv, rv, rv2)
 }
 
 func evaluateVarRef(expr *ast.VarRef, args map[string]map[string]interface{}) (ast.Expr, error) {

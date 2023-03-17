@@ -2,57 +2,67 @@ package evalute
 
 import (
 	"fmt"
+	"math"
 	"rule/utils/ast"
 	"rule/utils/token"
 	"time"
 )
 
-func ApplyUniaryOperator(op token.Token, leftValue ast.Expr) (ast.Expr, error) {
-
+func applyUniaryOperator(op token.Token, leftValue ast.Expr) (ast.Expr, error) {
+	switch op {
+	case token.EVEN:
+		return applyEVEN(leftValue)
+	case token.ODD:
+		return applyODD(leftValue)
+	case token.TRUE:
+		return applyTRUE(leftValue)
+	case token.FALSE:
+		return applyFALSE(leftValue)
+	}
 	return falseExpr, fmt.Errorf("invalid_operator_%v", op)
 }
 
-func ApplyBinaryOperator(op token.Token, leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyBinaryOperator(op token.Token, leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	switch op {
 	case token.EQ:
-		return ApplyEQ(leftValue, rightValue)
+		return applyEQ(leftValue, rightValue)
 	case token.NEQ:
-		return ApplyNEQ(leftValue, rightValue)
+		return applyNEQ(leftValue, rightValue)
 	case token.GT:
-		return ApplyGT(leftValue, rightValue)
+		return applyGT(leftValue, rightValue)
 	case token.LT:
-		return ApplyLT(leftValue, rightValue)
+		return applyLT(leftValue, rightValue)
 	case token.GTE:
-		return ApplyGTE(leftValue, rightValue)
+		return applyGTE(leftValue, rightValue)
 	case token.LTE:
-		return ApplyLTE(leftValue, rightValue)
+		return applyLTE(leftValue, rightValue)
 	case token.CONTAINS:
-		return ApplyCONTAINS(leftValue, rightValue)
+		return applyCONTAINS(leftValue, rightValue)
 	case token.NCONTAINS:
-		return ApplyNCONTAINS(leftValue, rightValue)
+		return applyNCONTAINS(leftValue, rightValue)
 	case token.STARTWITH:
-		return ApplySTARTWITH(leftValue, rightValue)
+		return applySTARTWITH(leftValue, rightValue)
 	case token.NSTARTWITH:
-		return ApplyNSTARTWITH(leftValue, rightValue)
+		return applyNSTARTWITH(leftValue, rightValue)
 	case token.ENDWITH:
-		return ApplyENDWITH(leftValue, rightValue)
+		return applyENDWITH(leftValue, rightValue)
 	case token.NENDWITH:
-		return ApplyNENDWITH(leftValue, rightValue)
+		return applyNENDWITH(leftValue, rightValue)
 	}
 	return falseExpr, fmt.Errorf("invalid_operator_%v", op)
 }
 
-func ApplyTerniaryOperator(op token.Token, leftValue, rightValue, rightValue2 ast.Expr) (ast.Expr, error) {
+func applyTerniaryOperator(op token.Token, leftValue, rightValue, rightValue2 ast.Expr) (ast.Expr, error) {
 	switch op {
 	case token.BETWEEN:
-		return ApplyBETWEEN(leftValue, rightValue, rightValue2)
+		return applyBETWEEN(leftValue, rightValue, rightValue2)
 	case token.NBETWEEN:
-		return ApplyNBETWEEN(leftValue, rightValue, rightValue2)
+		return applyNBETWEEN(leftValue, rightValue, rightValue2)
 	}
 	return falseExpr, fmt.Errorf("invalid_operator_%v", op)
 }
 
-func ApplyEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		as, bs string
 		an, bn float64
@@ -86,7 +96,7 @@ func ApplyEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyNEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyNEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		as, bs string
 		an, bn float64
@@ -120,7 +130,7 @@ func ApplyNEQ(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyGT(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyGT(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn float64
 		err    error
@@ -136,7 +146,7 @@ func ApplyGT(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyLT(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyLT(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn float64
 		err    error
@@ -152,7 +162,7 @@ func ApplyLT(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyGTE(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyGTE(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn float64
 		err    error
@@ -168,7 +178,7 @@ func ApplyGTE(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyLTE(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyLTE(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn float64
 		err    error
@@ -184,7 +194,7 @@ func ApplyLTE(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyCONTAINS(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyCONTAINS(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn string
 		err    error
@@ -200,7 +210,7 @@ func ApplyCONTAINS(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyNCONTAINS(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyNCONTAINS(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn string
 		err    error
@@ -216,7 +226,7 @@ func ApplyNCONTAINS(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplySTARTWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applySTARTWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn string
 		err    error
@@ -232,7 +242,7 @@ func ApplySTARTWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyNSTARTWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyNSTARTWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn string
 		err    error
@@ -248,7 +258,7 @@ func ApplyNSTARTWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn string
 		err    error
@@ -264,7 +274,7 @@ func ApplyENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyNENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
+func applyNENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	var (
 		an, bn string
 		err    error
@@ -280,7 +290,7 @@ func ApplyNENDWITH(leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
 }
 
-func ApplyBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLiteral, error) {
+func applyBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLiteral, error) {
 	var (
 		an, bn, cn float64
 		err, err2  error
@@ -296,10 +306,10 @@ func ApplyBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLite
 		}
 		return falseExpr, fmt.Errorf("error_cmp_num_nnum")
 	}
-	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
+	return falseExpr, fmt.Errorf("invalid_left_or_rights_operands")
 }
 
-func ApplyNBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLiteral, error) {
+func applyNBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLiteral, error) {
 	var (
 		an, bn, cn float64
 		err, err2  error
@@ -315,7 +325,55 @@ func ApplyNBETWEEN(leftValue, rightValue, rightValue2 ast.Expr) (*ast.BooleanLit
 		}
 		return falseExpr, fmt.Errorf("error_cmp_num_nnum")
 	}
-	return falseExpr, fmt.Errorf("invalid_left_or_right_operands")
+	return falseExpr, fmt.Errorf("invalid_left_or_rights_operands")
+}
+
+func applyEVEN(leftValue ast.Expr) (ast.Expr, error) {
+	var (
+		an  float64
+		err error
+	)
+	an, err = getNumber(leftValue)
+	if err == nil {
+		return &ast.BooleanLiteral{Val: (math.Mod(an, 2) == 0)}, nil
+	}
+	return falseExpr, fmt.Errorf("invalid_left_operands")
+}
+
+func applyODD(leftValue ast.Expr) (ast.Expr, error) {
+	var (
+		an  float64
+		err error
+	)
+	an, err = getNumber(leftValue)
+	if err == nil {
+		return &ast.BooleanLiteral{Val: (math.Mod(an, 2) != 0)}, nil
+	}
+	return falseExpr, fmt.Errorf("invalid_left_operands")
+}
+
+func applyTRUE(leftVal ast.Expr) (*ast.BooleanLiteral, error) {
+	var (
+		a, b bool
+		err  error
+	)
+	a, err = getBoolean(leftVal)
+	if err == nil {
+		return &ast.BooleanLiteral{Val: a}, nil
+	}
+	return &ast.BooleanLiteral{Val: (a && b)}, nil
+}
+
+func applyFALSE(leftVal ast.Expr) (*ast.BooleanLiteral, error) {
+	var (
+		a, b bool
+		err  error
+	)
+	a, err = getBoolean(leftVal)
+	if err == nil {
+		return &ast.BooleanLiteral{Val: !a}, nil
+	}
+	return &ast.BooleanLiteral{Val: (a && b)}, nil
 }
 
 func applyAND(leftVal, rightVal ast.Expr) (*ast.BooleanLiteral, error) {
@@ -377,7 +435,7 @@ func getNumber(e ast.Expr) (float64, error) {
 	}
 }
 
-func GetDatetime(e ast.Expr) (time.Time, error) {
+func getDatetime(e ast.Expr) (time.Time, error) {
 	switch n := e.(type) {
 	case *ast.TimeLiteral:
 		return n.Val, nil
