@@ -75,6 +75,9 @@ func evaluteGroupExpr(expr *ast.GroupExpr, args map[string]map[string]interface{
 			if err != nil {
 				return falseExpr, err
 			}
+			if ans.Val {
+				return ans, nil
+			}
 		} else {
 			return falseExpr, fmt.Errorf("invalid_operator_in_group_%v", expr.Id)
 		}
