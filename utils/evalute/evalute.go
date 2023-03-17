@@ -84,7 +84,11 @@ func evaluteGroupExpr(expr *ast.GroupExpr, args map[string]map[string]interface{
 
 func evaluateUniaryExpr(expr *ast.UniaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
 	fmt.Println("uniary_exp_called: ", expr)
-	return falseExpr, fmt.Errorf("df")
+	lv, err := evaluateSubtree(expr.LHS, args)
+	if err != nil {
+		return falseExpr, err
+	}
+	return ApplyUniaryOperator(expr.Op, lv)
 }
 
 func evaluateBinaryExpr(expr *ast.BinaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
@@ -101,8 +105,20 @@ func evaluateBinaryExpr(expr *ast.BinaryExpr, args map[string]map[string]interfa
 }
 
 func evaluateTerniaryExpr(expr *ast.TerniaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
-	fmt.Println("uniary_exp_called: ", expr)
-	return falseExpr, fmt.Errorf("df")
+	fmt.Println("terniary_exp_called: ", expr)
+	lv, err := evaluateSubtree(expr.LHS, args)
+	if err != nil {
+		return falseExpr, err
+	}
+	rv, err := evaluateSubtree(expr.RHS, args)
+	if err != nil {
+		return falseExpr, err
+	}
+	rv2, err := evaluateSubtree(expr.RHS2, args)
+	if err != nil {
+		return falseExpr, err
+	}
+	return ApplyTerniaryOperator(expr.Op, lv, rv, rv2)
 }
 
 func evaluateVarRef(expr *ast.VarRef, args map[string]map[string]interface{}) (ast.Expr, error) {
