@@ -19,7 +19,7 @@ const Params2 = `
 const Params3 = `
 {
 	"customInput":{
-		"CI0": 5
+		"CI0": 65,
 		"CI10": "aman"
 	}
 }
@@ -27,7 +27,7 @@ const Params3 = `
 const Params4 = `
 {
 	"customInput":{
-		"CI0": 5
+		"CI0": 5,
 		"CI10": "satya"
 	}
 }

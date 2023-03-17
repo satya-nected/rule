@@ -54,6 +54,8 @@ func evaluteGroupExpr(expr *ast.GroupExpr, args map[string]map[string]interface{
 	ans := falseExpr
 	if expr.Op == token.AND {
 		ans.Val = true
+	} else if expr.Op == token.OR {
+		ans.Val = false
 	}
 	for _, exp := range expr.Children {
 		expRes, err := evaluateSubtree(exp, args)
