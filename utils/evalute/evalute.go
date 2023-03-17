@@ -3,8 +3,8 @@ package evalute
 import (
 	"fmt"
 	"reflect"
-	"test/utils/ast"
-	"test/utils/token"
+	"rule/utils/ast"
+	"rule/utils/token"
 )
 
 var (

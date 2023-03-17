@@ -2,7 +2,7 @@ package parser
 
 import (
 	"fmt"
-	"test/utils/token"
+	"rule/utils/token"
 )
 
 type Conditions struct {

@@ -2,16 +2,25 @@ package evalute
 
 import (
 	"fmt"
-	"test/utils/ast"
-	"test/utils/token"
+	"rule/utils/ast"
+	"rule/utils/token"
 	"time"
 )
+
+func ApplyUniaryOperator(op token.Token, leftValue ast.Expr) (ast.Expr, error) {
+
+	return nil, nil
+}
 
 func ApplyBinaryOperator(op token.Token, leftValue, rightValue ast.Expr) (ast.Expr, error) {
 	switch op {
 	case token.EQ:
 		return ApplyEQ(leftValue, rightValue)
 	}
+	return nil, nil
+}
+
+func ApplyTerniaryOperator(op token.Token, leftValue, rightValue, rightVal2 ast.Expr) (ast.Expr, error) {
 	return nil, nil
 }
 

@@ -3,8 +3,8 @@ package parser
 import (
 	"encoding/json"
 	"fmt"
-	"test/utils/ast"
-	"test/utils/token"
+	"rule/utils/ast"
+	"rule/utils/token"
 	"time"
 )
 

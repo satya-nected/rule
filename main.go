@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"test/utils/evalute"
-	"test/utils/parser"
+	"rule/utils/evalute"
+	"rule/utils/parser"
 )
 
 func main() {

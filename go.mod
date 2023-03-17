@@ -1,3 +1,3 @@
-module test
+module rule
 
 go 1.19
