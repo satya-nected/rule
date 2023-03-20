@@ -3,9 +3,10 @@ package evalute
 import (
 	"fmt"
 	"math"
-	"rule/utils/ast"
-	"rule/utils/token"
 	"time"
+
+	"github.com/satya-nected/rule/utils/ast"
+	"github.com/satya-nected/rule/utils/token"
 )
 
 func applyUniaryOperator(op token.Token, leftValue ast.Expr) (ast.Expr, error) {

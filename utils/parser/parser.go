@@ -3,9 +3,10 @@ package parser
 import (
 	"encoding/json"
 	"fmt"
-	"rule/utils/ast"
-	"rule/utils/token"
 	"time"
+
+	"github.com/satya-nected/rule/utils/ast"
+	"github.com/satya-nected/rule/utils/token"
 )
 
 func Parse(data string) (ast.Expr, error) {

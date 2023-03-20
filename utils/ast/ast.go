@@ -2,9 +2,10 @@ package ast
 
 import (
 	"fmt"
-	"rule/utils/token"
 	"strconv"
 	"time"
+
+	"github.com/satya-nected/rule/utils/token"
 )
 
 type Node interface {

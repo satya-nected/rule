@@ -2,7 +2,8 @@ package parser
 
 import (
 	"fmt"
-	"rule/utils/token"
+
+	"github.com/satya-nected/rule/utils/token"
 )
 
 type Conditions struct {

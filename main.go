@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"rule/utils/evalute"
-	"rule/utils/parser"
+
+	"github.com/satya-nected/rule/utils/evalute"
+	"github.com/satya-nected/rule/utils/parser"
 )
 
 func main() {

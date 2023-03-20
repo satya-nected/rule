@@ -3,8 +3,9 @@ package evalute
 import (
 	"fmt"
 	"reflect"
-	"rule/utils/ast"
-	"rule/utils/token"
+
+	"github.com/satya-nected/rule/utils/ast"
+	"github.com/satya-nected/rule/utils/token"
 )
 
 var (
