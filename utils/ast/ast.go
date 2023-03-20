@@ -15,7 +15,6 @@ type Node interface {
 type Expr interface {
 	Node
 	expr()
-	Args() []string
 }
 
 // GroupExpr represents a groupExpr
@@ -27,10 +26,6 @@ type GroupExpr struct {
 
 func (*GroupExpr) expr() {}
 func (*GroupExpr) node() {}
-func (*GroupExpr) Args() []string {
-	args := []string{}
-	return args
-}
 func (r *GroupExpr) String() string {
 	str := "{ " + r.Op.String() + " : ["
 	for _, child := range r.Children {
@@ -53,10 +48,6 @@ type BinaryExpr struct {
 
 func (*BinaryExpr) expr() {}
 func (*BinaryExpr) node() {}
-func (*BinaryExpr) Args() []string {
-	args := []string{}
-	return args
-}
 func (e *BinaryExpr) String() string {
 	if e.LHS != nil && e.RHS != nil {
 		return fmt.Sprintf("%s %s %s", e.LHS.String(), e.Op, e.RHS.String())
@@ -73,10 +64,6 @@ type UniaryExpr struct {
 
 func (*UniaryExpr) expr() {}
 func (*UniaryExpr) node() {}
-func (*UniaryExpr) Args() []string {
-	args := []string{}
-	return args
-}
 func (e *UniaryExpr) String() string {
 	if e.LHS != nil {
 		return fmt.Sprintf("%s %s", e.Op, e.LHS.String())
@@ -95,10 +82,6 @@ type TerniaryExpr struct {
 
 func (*TerniaryExpr) expr() {}
 func (*TerniaryExpr) node() {}
-func (*TerniaryExpr) Args() []string {
-	args := []string{}
-	return args
-}
 func (e *TerniaryExpr) String() string {
 	if e.LHS != nil && e.RHS != nil && e.RHS2 != nil {
 		return fmt.Sprintf("%s %s %s %s", e.LHS.String(), e.Op, e.RHS.String(), e.RHS2.String())
@@ -115,10 +98,6 @@ type VarRef struct {
 
 func (*VarRef) expr() {}
 func (*VarRef) node() {}
-func (*VarRef) Args() []string {
-	args := []string{}
-	return args
-}
 func (r *VarRef) String() string {
 	return r.Var
 }
@@ -129,12 +108,8 @@ type NumberLiteral struct {
 	Val float64
 }
 
-func (*NumberLiteral) expr() {}
-func (*NumberLiteral) node() {}
-func (*NumberLiteral) Args() []string {
-	args := []string{}
-	return args
-}
+func (*NumberLiteral) expr()            {}
+func (*NumberLiteral) node()            {}
 func (l *NumberLiteral) String() string { return strconv.FormatFloat(l.Val, 'f', 3, 64) }
 
 // BooleanLiteral represents a boolean literal.
@@ -145,10 +120,6 @@ type BooleanLiteral struct {
 
 func (*BooleanLiteral) expr() {}
 func (*BooleanLiteral) node() {}
-func (*BooleanLiteral) Args() []string {
-	args := []string{}
-	return args
-}
 func (l *BooleanLiteral) String() string {
 	if l.Val {
 		return "true"
@@ -162,12 +133,8 @@ type StringLiteral struct {
 	Val string
 }
 
-func (*StringLiteral) expr() {}
-func (*StringLiteral) node() {}
-func (*StringLiteral) Args() []string {
-	args := []string{}
-	return args
-}
+func (*StringLiteral) expr()            {}
+func (*StringLiteral) node()            {}
 func (l *StringLiteral) String() string { return Quote(l.Val) }
 
 // TimeLiteral represents a point-in-time literal.
@@ -176,10 +143,6 @@ type TimeLiteral struct {
 	Val time.Time
 }
 
-func (*TimeLiteral) expr() {}
-func (*TimeLiteral) node() {}
-func (*TimeLiteral) Args() []string {
-	args := []string{}
-	return args
-}
+func (*TimeLiteral) expr()            {}
+func (*TimeLiteral) node()            {}
 func (l *TimeLiteral) String() string { return l.Val.UTC().Format("2006-01-02 15:04:05.999") }
