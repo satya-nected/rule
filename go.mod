@@ -1,3 +1,3 @@
-module github.com/satya-nected/rule
+module rule
 
 go 1.19

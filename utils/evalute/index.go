@@ -5,8 +5,8 @@ import (
 	"math"
 	"time"
 
-	"github.com/satya-nected/rule/utils/ast"
-	"github.com/satya-nected/rule/utils/token"
+	"rule/utils/ast"
+	"rule/utils/token"
 )
 
 func applyUniaryOperator(op token.Token, leftValue ast.Expr) (ast.Expr, error) {

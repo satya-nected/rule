@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/satya-nected/rule/utils/token"
+	"rule/utils/token"
 )
 
 type Node interface {

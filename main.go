@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/satya-nected/rule/utils/evalute"
-	"github.com/satya-nected/rule/utils/parser"
+	"rule/utils/evalute"
+	"rule/utils/parser"
 )
 
 func main() {

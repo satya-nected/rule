@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/satya-nected/rule/utils/ast"
-	"github.com/satya-nected/rule/utils/token"
+	"rule/utils/ast"
+	"rule/utils/token"
 )
 
 var (
