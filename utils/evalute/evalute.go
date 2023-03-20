@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"rule/logger"
 	"rule/utils/ast"
 	"rule/utils/token"
 )
@@ -51,7 +52,7 @@ func evaluateSubtree(expr ast.Expr, args map[string]map[string]interface{}) (ast
 }
 
 func evaluteGroupExpr(expr *ast.GroupExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
-	fmt.Println("group_exp", expr)
+	logger.Debugf("group_exp %v", expr)
 	ans := falseExpr
 	if expr.Op == token.AND {
 		ans.Val = true
@@ -87,7 +88,7 @@ func evaluteGroupExpr(expr *ast.GroupExpr, args map[string]map[string]interface{
 }
 
 func evaluateUniaryExpr(expr *ast.UniaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
-	fmt.Println("uniary_exp_called: ", expr)
+	logger.Debugf("uniary_exp_called: %v", expr)
 	lv, err := evaluateSubtree(expr.LHS, args)
 	if err != nil {
 		return falseExpr, err
@@ -96,7 +97,7 @@ func evaluateUniaryExpr(expr *ast.UniaryExpr, args map[string]map[string]interfa
 }
 
 func evaluateBinaryExpr(expr *ast.BinaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
-	fmt.Println("binary_exp_called: ", expr)
+	logger.Debugf("binary_exp_called: %v", expr)
 	lv, err := evaluateSubtree(expr.LHS, args)
 	if err != nil {
 		return falseExpr, err
@@ -109,7 +110,7 @@ func evaluateBinaryExpr(expr *ast.BinaryExpr, args map[string]map[string]interfa
 }
 
 func evaluateTerniaryExpr(expr *ast.TerniaryExpr, args map[string]map[string]interface{}) (ast.Expr, error) {
-	fmt.Println("terniary_exp_called: ", expr)
+	logger.Debugf("terniary_exp_called: %v", expr)
 	lv, err := evaluateSubtree(expr.LHS, args)
 	if err != nil {
 		return falseExpr, err
@@ -126,7 +127,7 @@ func evaluateTerniaryExpr(expr *ast.TerniaryExpr, args map[string]map[string]int
 }
 
 func evaluateVarRef(expr *ast.VarRef, args map[string]map[string]interface{}) (ast.Expr, error) {
-	fmt.Println("val_Exp", expr)
+	logger.Debugf("val_exp %v", expr)
 	if _, ok := args[expr.Source]; !ok {
 		return falseExpr, fmt.Errorf("source_data_not_found_%v_%v", expr.Source, expr.Var)
 	}

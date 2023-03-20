@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"rule/logger"
 	"rule/utils/ast"
 	"rule/utils/token"
 )
@@ -20,7 +21,7 @@ func Parse(data string) (ast.Expr, error) {
 }
 
 func parse(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
-	fmt.Println("parsing start for ", nodeId)
+	logger.Debugf("parsing start for %v", nodeId)
 
 	// check if node is visited
 	if _, ok := visited[nodeId]; ok {
@@ -56,7 +57,7 @@ func parse(nodeId string, conditions *Conditions, visited map[string]bool) (ast.
 }
 
 func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
-	fmt.Println("started parseGroupNode ...", nodeId)
+	logger.Debugf("started parseGroupNode %v ...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true
@@ -97,7 +98,7 @@ func parseGroupNode(nodeId string, conditions *Conditions, visited map[string]bo
 }
 
 func parseConditionNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
-	fmt.Println("started parseConditionNode ...", nodeId)
+	logger.Debugf("started parseConditionNode %v ...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true
@@ -162,7 +163,7 @@ func parseConditionNode(nodeId string, conditions *Conditions, visited map[strin
 }
 
 func parseConstantNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
-	fmt.Println("started parseConstantNode ...", nodeId)
+	logger.Debugf("started parseConstantNode %v...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true
@@ -203,7 +204,7 @@ func parseConstantNode(nodeId string, conditions *Conditions, visited map[string
 }
 
 func parseParamsNode(nodeId string, conditions *Conditions, visited map[string]bool) (ast.Expr, error) {
-	fmt.Println("started parseParamsNode ...", nodeId)
+	logger.Debugf("started parseParamsNode %v...", nodeId)
 
 	// make visited nodeId
 	visited[nodeId] = true

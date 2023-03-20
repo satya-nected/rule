@@ -4,14 +4,19 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"rule/logger"
 	"rule/utils/evalute"
 	"rule/utils/parser"
+
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	dataA := [...]string{Data1, Data2, Data3}
 	paramsA := [...]string{Params1, Params2, Params3}
 	var params map[string]map[string]interface{}
+
+	logger.SetLogLevel(logrus.DebugLevel)
 
 	for i := 0; i < 3; i++ {
 		expr, err := parser.Parse(dataA[i])

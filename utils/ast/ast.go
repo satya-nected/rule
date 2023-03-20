@@ -136,7 +136,7 @@ type StringLiteral struct {
 
 func (*StringLiteral) expr()            {}
 func (*StringLiteral) node()            {}
-func (l *StringLiteral) String() string { return Quote(l.Val) }
+func (l *StringLiteral) String() string { return l.Val }
 
 // TimeLiteral represents a point-in-time literal.
 type TimeLiteral struct {
