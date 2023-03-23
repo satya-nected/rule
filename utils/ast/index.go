@@ -8,7 +8,7 @@ type DataType string
 
 const (
 	Unknown = DataType("")
-	Number  = DataType("numeric")
+	Numeric = DataType("numeric")
 	Boolean = DataType("boolean")
 	String  = DataType("string")
 	Time    = DataType("time")
@@ -18,7 +18,7 @@ const (
 func InspectDataType(v interface{}) DataType {
 	switch v.(type) {
 	case float64:
-		return Number
+		return Numeric
 	case bool:
 		return Boolean
 	case string:

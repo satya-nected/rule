@@ -7,7 +7,7 @@ const (
 
 	// Literals
 	literalBegin
-	NUMBER
+	NUMERIC
 	STRING
 	DATETIME
 	literalEnd
@@ -68,7 +68,7 @@ const (
 var tokenList = [...]string{
 	ILLEGAL_TOKEN: "ILLEGAL",
 
-	NUMBER:   "number",
+	NUMERIC:  "numeric",
 	STRING:   "string",
 	DATETIME: "dateTime",
 
@@ -114,8 +114,8 @@ func Tes() Token {
 func NewToken(input string) Token {
 	switch input {
 
-	case NUMBER.String():
-		return NUMBER
+	case NUMERIC.String():
+		return NUMERIC
 	case STRING.String():
 		return STRING
 	case DATETIME.String():

@@ -1,5 +1,14 @@
 package main
 
+const Params0 = `
+{
+	"customInput": {
+		"cartValue": 50,
+		"itemsCategory": "jwellery"
+	  }
+}
+`
+
 const Params1 = `
 {
 	"customInput":{

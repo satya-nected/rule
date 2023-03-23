@@ -1,18 +1,19 @@
 package parser
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
 	"rule/logger"
+	"rule/utils"
 	"rule/utils/ast"
 	"rule/utils/token"
 )
 
-func Parse(data string) (ast.Expr, error) {
+func Parse(data interface{}) (ast.Expr, error) {
 	var conditions Conditions
-	if err := json.Unmarshal([]byte(data), &conditions); err != nil {
+
+	if err := utils.JsonToStruct(data, &conditions); err != nil {
 		return nil, err
 	}
 
@@ -184,8 +185,8 @@ func parseConstantNode(nodeId string, conditions *Conditions, visited map[string
 	}
 
 	switch datatypeToken {
-	case token.NUMBER:
-		if ast.InspectDataType(nodeDetail.Value) != ast.Number {
+	case token.NUMERIC:
+		if ast.InspectDataType(nodeDetail.Value) != ast.Numeric {
 			return nil, fmt.Errorf("invalid_value_%v_%v", nodeDetail.Value, nodeId)
 		}
 		return &ast.NumberLiteral{Id: nodeId, Val: nodeDetail.Value.(float64)}, nil

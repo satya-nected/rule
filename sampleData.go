@@ -1,5 +1,99 @@
 package main
 
+var Data0 = `
+{
+    "startNode": "1",
+    "nodes":	{
+		"1": {
+		  "nodeType": "group",
+		  "operator": "and",
+		  "parent": "",
+		  "children": ["2", "3"],
+		  "siblingIndex": 1
+		},
+		"2": {
+		  "nodeType": "condition",
+		  "operator": "gt",
+		  "dataType": "numeric",
+		  "parent": "1",
+		  "leftNode": ["4"],
+		  "rightNode": ["5"],
+		  "siblingIndex": 1
+		},
+		"3": {
+		  "nodeType": "group",
+		  "operator": "or",
+		  "parent": "1",
+		  "children": ["6", "7"],
+		  "siblingIndex": 2
+		},
+		"4": {
+		  "nodeType": "params",
+		  "sourceType": "customInput",
+		  "dataType": "numeric",
+		  "attribute": "cartValue",
+		  "parent": "2",
+		  "siblingIndex": 1
+		},
+		"5": {
+		  "nodeType": "constant",
+		  "dataType": "numeric",
+		  "value": 100,
+		  "parent": "2",
+		  "siblingIndex": 1
+		},
+		"6": {
+		  "nodeType": "condition",
+		  "operator": "gt",
+		  "dataType": "numeric",
+		  "parent": "3",
+		  "leftNode": ["8"],
+		  "rightNode": ["9"],
+		  "siblingIndex": 1
+		},
+		"7": {
+		  "nodeType": "condition",
+		  "operator": "eq",
+		  "dataType": "string",
+		  "parent": "3",
+		  "leftNode": ["10"],
+		  "rightNode": ["11"],
+		  "siblingIndex": 2
+		},
+		"8": {
+		  "nodeType": "params",
+		  "sourceType": "customInput",
+		  "attribute": "cartValue",
+		  "dataType": "numeric",
+		  "parent": "6",
+		  "siblingIndex": 1
+		},
+		"9": {
+		  "nodeType": "constant",
+		  "dataType": "numeric",
+		  "value": 200,
+		  "parent": "6",
+		  "siblingIndex": 1
+		},
+		"10": {
+		  "nodeType": "params",
+		  "sourceType": "customInput",
+		  "attribute": "itemsCategory",
+		  "dataType": "string",
+		  "parent": "7",
+		  "siblingIndex": 1
+		},
+		"11": {
+		  "nodeType": "constant",
+		  "dataType": "string",
+		  "value": "jwellery",
+		  "parent": "7",
+		  "siblingIndex": 1
+		}
+	}
+}
+`
+
 var Data1 = `
 {
 	"startNode": "rule_01",
@@ -58,7 +152,7 @@ var Data1 = `
 		"rule_2": {
 			"attribute": "",
 			"children": null,
-			"datatype": "number",
+			"datatype": "numeric",
 			"leftNode": null,
 			"name": "",
 			"nodeType": "constant",
@@ -112,7 +206,7 @@ var Data2 = `
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 60,
-			"datatype":"number",
+			"datatype":"numeric",
 			"parent": "rule_1"
 		},
 		"rule_2": {
@@ -138,7 +232,7 @@ var Data2 = `
 		"rule_5": {
 			"siblingIndex": 1,
 			"nodeType": "constant",
-			"datatype":"number",
+			"datatype":"numeric",
 			"value": 90,
 			"parent": "rule_5"
 		}
@@ -185,7 +279,7 @@ var Data3 = `
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 60,
-			"datatype": "number",
+			"datatype": "numeric",
 			"parent": "rule_1"
 		},
 		"rule_2": {
@@ -212,7 +306,7 @@ var Data3 = `
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 90,
-			"datatype": "number",
+			"datatype": "numeric",
 			"parent": "rule_5"
 		},
 		"rule_6": {
@@ -323,7 +417,7 @@ var Data4 = `
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 60,
-			"datatype":"number",
+			"datatype":"numeric",
 			"parent": "rule_1"
 		},
 		"rule_2": {
@@ -350,7 +444,7 @@ var Data4 = `
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 90,
-			"datatype":"number",
+			"datatype":"numeric",
 			"parent": "rule_5"
 		},
 		"rule_6": {
@@ -442,14 +536,14 @@ var Data4 = `
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 4,
-			"datatype":"number",
+			"datatype":"numeric",
 			"parent": "rule_23"
 		},
 		"rule_24": {
 			"siblingIndex": 1,
 			"nodeType": "constant",
 			"value": 10,
-			"datatype":"number",
+			"datatype":"numeric",
 			"parent": "rule_24"
 		}
 	}
