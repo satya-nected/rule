@@ -3,9 +3,9 @@ package main
 const Params0 = `
 {
 	"customInput": {
-		"cartValue": 50,
-		"itemsCategory": "jwellery"
-	  }
+		"cartValue": 51,
+		"itemsCategory": "jwellery1"
+	}
 }
 `
 
@@ -38,6 +38,15 @@ const Params4 = `
 	"customInput":{
 		"CI0": 5,
 		"CI10": "satya"
+	}
+}
+`
+
+const Params5 = `
+{
+	"customInput": {
+		"cartValue": 50,
+		"itemsCategory": "jwellery"
 	}
 }
 `

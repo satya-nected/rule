@@ -2,93 +2,190 @@ package main
 
 var Data0 = `
 {
-    "startNode": "1",
-    "nodes":	{
-		"1": {
-		  "nodeType": "group",
-		  "operator": "and",
-		  "parent": "",
-		  "children": ["2", "3"],
-		  "siblingIndex": 1
+	"startNode": "rule_01",
+	"nodes": {
+		"rule_01": {
+			"attribute": "",
+			"children": [
+				"rule_02",
+				"rule_lfl4otjrpajonjehhlj"
+			],
+			"dataType": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "group",
+			"operator": "or",
+			"parent": "",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": null
 		},
-		"2": {
-		  "nodeType": "condition",
-		  "operator": "gt",
-		  "dataType": "numeric",
-		  "parent": "1",
-		  "leftNode": ["4"],
-		  "rightNode": ["5"],
-		  "siblingIndex": 1
+		"rule_02": {
+			"attribute": "",
+			"children": null,
+			"dataType": "numeric",
+			"leftNode": [
+				"rule_03"
+			],
+			"name": "",
+			"nodeType": "condition",
+			"operator": "gt",
+			"parent": "rule_01",
+			"query": "",
+			"rightNode": [
+				"rule_lfl4on54728u3l8qd13"
+			],
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": null
 		},
-		"3": {
-		  "nodeType": "group",
-		  "operator": "or",
-		  "parent": "1",
-		  "children": ["6", "7"],
-		  "siblingIndex": 2
+		"rule_03": {
+			"attribute": "cartValue",
+			"children": null,
+			"dataType": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "params",
+			"operator": "",
+			"parent": "rule_02",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "customInput",
+			"value": null
 		},
-		"4": {
-		  "nodeType": "params",
-		  "sourceType": "customInput",
-		  "dataType": "numeric",
-		  "attribute": "cartValue",
-		  "parent": "2",
-		  "siblingIndex": 1
+		"rule_lfl4on54728u3l8qd13": {
+			"attribute": "",
+			"children": null,
+			"dataType": "numeric",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "constant",
+			"operator": "",
+			"parent": "rule_lfl4on54728u3l8qd13",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": 100
 		},
-		"5": {
-		  "nodeType": "constant",
-		  "dataType": "numeric",
-		  "value": 100,
-		  "parent": "2",
-		  "siblingIndex": 1
+		"rule_lfl4otjrbfjybrrtn1g": {
+			"attribute": "",
+			"children": null,
+			"dataType": "numeric",
+			"leftNode": [
+				"rule_lfl4otjrvvdzujdwic"
+			],
+			"name": "",
+			"nodeType": "condition",
+			"operator": "gt",
+			"parent": "rule_lfl4otjrpajonjehhlj",
+			"query": "",
+			"rightNode": [
+				"rule_lfl4ow2yp3eubsicbm"
+			],
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": null
 		},
-		"6": {
-		  "nodeType": "condition",
-		  "operator": "gt",
-		  "dataType": "numeric",
-		  "parent": "3",
-		  "leftNode": ["8"],
-		  "rightNode": ["9"],
-		  "siblingIndex": 1
+		"rule_lfl4otjrpajonjehhlj": {
+			"attribute": "",
+			"children": [
+				"rule_lfl4otjrbfjybrrtn1g",
+				"rule_lfl4p3gdn1rjqpqqj5"
+			],
+			"dataType": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "group",
+			"operator": "and",
+			"parent": "rule_01",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 2,
+			"sourceType": "",
+			"value": null
 		},
-		"7": {
-		  "nodeType": "condition",
-		  "operator": "eq",
-		  "dataType": "string",
-		  "parent": "3",
-		  "leftNode": ["10"],
-		  "rightNode": ["11"],
-		  "siblingIndex": 2
+		"rule_lfl4otjrvvdzujdwic": {
+			"attribute": "cartValue",
+			"children": null,
+			"dataType": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "params",
+			"operator": "",
+			"parent": "rule_lfl4otjrbfjybrrtn1g",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "customInput",
+			"value": null
 		},
-		"8": {
-		  "nodeType": "params",
-		  "sourceType": "customInput",
-		  "attribute": "cartValue",
-		  "dataType": "numeric",
-		  "parent": "6",
-		  "siblingIndex": 1
+		"rule_lfl4ow2yp3eubsicbm": {
+			"attribute": "",
+			"children": null,
+			"dataType": "numeric",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "constant",
+			"operator": "",
+			"parent": "rule_lfl4ow2yp3eubsicbm",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": 50
 		},
-		"9": {
-		  "nodeType": "constant",
-		  "dataType": "numeric",
-		  "value": 200,
-		  "parent": "6",
-		  "siblingIndex": 1
+		"rule_lfl4p3gd6x638r4alms": {
+			"attribute": "itemsCategory",
+			"children": null,
+			"dataType": "",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "params",
+			"operator": "",
+			"parent": "rule_lfl4p3gdn1rjqpqqj5",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 2,
+			"sourceType": "customInput",
+			"value": null
 		},
-		"10": {
-		  "nodeType": "params",
-		  "sourceType": "customInput",
-		  "attribute": "itemsCategory",
-		  "dataType": "string",
-		  "parent": "7",
-		  "siblingIndex": 1
+		"rule_lfl4p3gdn1rjqpqqj5": {
+			"attribute": "",
+			"children": null,
+			"dataType": "string",
+			"leftNode": [
+				"rule_lfl4p3gd6x638r4alms"
+			],
+			"name": "",
+			"nodeType": "condition",
+			"operator": "eq",
+			"parent": "rule_lfl4otjrpajonjehhlj",
+			"query": "",
+			"rightNode": [
+				"rule_lfl4p75v9nr5beq8ule"
+			],
+			"siblingIndex": 2,
+			"sourceType": "",
+			"value": null
 		},
-		"11": {
-		  "nodeType": "constant",
-		  "dataType": "string",
-		  "value": "jwellery",
-		  "parent": "7",
-		  "siblingIndex": 1
+		"rule_lfl4p75v9nr5beq8ule": {
+			"attribute": "",
+			"children": null,
+			"dataType": "string",
+			"leftNode": null,
+			"name": "",
+			"nodeType": "constant",
+			"operator": "",
+			"parent": "rule_lfl4p75v9nr5beq8ule",
+			"query": "",
+			"rightNode": null,
+			"siblingIndex": 1,
+			"sourceType": "",
+			"value": "jwellery"
 		}
 	}
 }
@@ -545,6 +642,100 @@ var Data4 = `
 			"value": 10,
 			"datatype":"numeric",
 			"parent": "rule_24"
+		}
+	}
+}
+`
+
+var Data5 = `
+{
+    "startNode": "1",
+    "nodes":	{
+		"1": {
+		  "nodeType": "group",
+		  "operator": "and",
+		  "parent": "",
+		  "children": ["2", "3"],
+		  "siblingIndex": 1
+		},
+		"2": {
+		  "nodeType": "condition",
+		  "operator": "gt",
+		  "dataType": "numeric",
+		  "parent": "1",
+		  "leftNode": ["4"],
+		  "rightNode": ["5"],
+		  "siblingIndex": 1
+		},
+		"3": {
+		  "nodeType": "group",
+		  "operator": "or",
+		  "parent": "1",
+		  "children": ["6", "7"],
+		  "siblingIndex": 2
+		},
+		"4": {
+		  "nodeType": "params",
+		  "sourceType": "customInput",
+		  "dataType": "numeric",
+		  "attribute": "cartValue",
+		  "parent": "2",
+		  "siblingIndex": 1
+		},
+		"5": {
+		  "nodeType": "constant",
+		  "dataType": "numeric",
+		  "value": 100,
+		  "parent": "2",
+		  "siblingIndex": 1
+		},
+		"6": {
+		  "nodeType": "condition",
+		  "operator": "gt",
+		  "dataType": "numeric",
+		  "parent": "3",
+		  "leftNode": ["8"],
+		  "rightNode": ["9"],
+		  "siblingIndex": 1
+		},
+		"7": {
+		  "nodeType": "condition",
+		  "operator": "eq",
+		  "dataType": "string",
+		  "parent": "3",
+		  "leftNode": ["10"],
+		  "rightNode": ["11"],
+		  "siblingIndex": 2
+		},
+		"8": {
+		  "nodeType": "params",
+		  "sourceType": "customInput",
+		  "attribute": "cartValue",
+		  "dataType": "numeric",
+		  "parent": "6",
+		  "siblingIndex": 1
+		},
+		"9": {
+		  "nodeType": "constant",
+		  "dataType": "numeric",
+		  "value": 200,
+		  "parent": "6",
+		  "siblingIndex": 1
+		},
+		"10": {
+		  "nodeType": "params",
+		  "sourceType": "customInput",
+		  "attribute": "itemsCategory",
+		  "dataType": "string",
+		  "parent": "7",
+		  "siblingIndex": 1
+		},
+		"11": {
+		  "nodeType": "constant",
+		  "dataType": "string",
+		  "value": "jwellery",
+		  "parent": "7",
+		  "siblingIndex": 1
 		}
 	}
 }
